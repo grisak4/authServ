@@ -1,0 +1,28 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+body {
+    background: rgb(22, 22, 22);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.window{
+    color: rgb(255, 255, 255);
+    background: rgb(44,23,204);
+background: linear-gradient(306deg, rgba(44,23,204,1) 0%, rgba(113,156,255,1) 35%, rgba(23,255,249,1) 100%);
+    width: 500px;
+    height: 600px;
+    overflow: hidden;
+    box-shadow: 3px 1px 10px rgb(0, 0, 0);
+    border-radius: 20px;
+}
