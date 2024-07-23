@@ -1,5 +1,9 @@
 package main
 
-func main() {
+import (
+	"auth-test/app"
+)
 
+func main() {
+	app.Run()
 }
