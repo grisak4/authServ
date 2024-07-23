@@ -4,3 +4,6 @@ database:
   user: "root"
   password: "12345"
   dbname: "testauth"
+
+jwt:
+  secret_key: "my_secret_key"

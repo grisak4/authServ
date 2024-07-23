@@ -6,6 +6,10 @@ import (
 	"github.com/spf13/viper"
 )
 
+type jwtToken struct {
+	jwtSecret string
+}
+
 type DBConnection struct {
 	Host         string
 	Port         int
@@ -17,7 +21,6 @@ type DBConnection struct {
 func ReadConfigDatabase() DBConnection {
 	var dbCon DBConnection
 
-	// Настройка Viper для чтения конфигурационного файла
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
@@ -35,4 +38,21 @@ func ReadConfigDatabase() DBConnection {
 	dbCon.DatabaseName = viper.GetString("database.dbname")
 
 	return dbCon
+}
+
+func ReadConfigJWT() jwtToken {
+	var jwtTok jwtToken
+
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath(".")
+
+	// Чтение конфигурации
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatalf("Error reading config file, %s", err)
+	}
+
+	jwtTok.jwtSecret = viper.GetString("jwt.secret_key")
+
+	return jwtTok
 }
