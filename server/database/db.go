@@ -26,6 +26,12 @@ func ConnectDB() {
 		log.Fatalf("Error connecting to the database: %s", err)
 	}
 
+	err = db.Ping()
+	if err != nil {
+		fmt.Println("Error pinging database: ", err)
+		return
+	}
+
 	fmt.Println("Successfully connected to the database!")
 }
 
@@ -34,5 +40,5 @@ func InitDb() *sql.DB {
 }
 
 func CloseDB() {
-	defer db.Close()
+	db.Close()
 }

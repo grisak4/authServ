@@ -9,8 +9,10 @@ import (
 
 func Run() {
 	database.ConnectDB()
+	defer database.CloseDB()
 
 	r := gin.Default()
+	routes.CorsConfig(r)
 	routes.LoginRoutes(r)
 
 	r.Run(":8080")
