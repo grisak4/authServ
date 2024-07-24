@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func authMiddleware() gin.HandlerFunc {
+func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.GetHeader("Authorization")
 		if tokenString == "" {
