@@ -4,6 +4,7 @@ import (
 	"auth-test/config"
 	"auth-test/models"
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -12,16 +13,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var db *sql.DB
-
-func Initialize(database *sql.DB) {
-	db = database
-}
-
-func PostLogin(c *gin.Context) {
+func PostLogin(c *gin.Context, db *sql.DB) {
 	var creds struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
+	}
+	if err := c.BindJSON(&creds); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
 	}
 
 	rows, err := db.Query("SELECT * FROM Users")
@@ -32,7 +31,6 @@ func PostLogin(c *gin.Context) {
 	}
 
 	var users []models.User
-
 	for rows.Next() { // вывод с базы
 		var user models.User
 		if err := rows.Scan(&user.ID, &user.Username, &user.Password); err != nil {
@@ -43,16 +41,16 @@ func PostLogin(c *gin.Context) {
 		users = append(users, user)
 	}
 
-	if err := c.BindJSON(&creds); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
-		return
-	}
-
-	for _, user := range users { // проверка с базы есть ли такой пользователь
-		if creds.Username != user.Username || creds.Password != user.Password {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid credentials"})
-			return
+	userFound := false
+	for _, user := range users {
+		if creds.Username == user.Username && creds.Password == user.Password {
+			userFound = true
+			break
 		}
+	}
+	if !userFound {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid credentials"})
+		return
 	}
 
 	expirationTime := time.Now().Add(5 * time.Minute) // создание времени существования токена
@@ -64,8 +62,10 @@ func PostLogin(c *gin.Context) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims) // создание токена
-	tokenString, err := token.SignedString(config.ReadConfigJWT())
+	jwtKey := []byte(config.ReadConfigJWT())
+	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
+		fmt.Println("Error signing token:", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not create token"})
 		return
 	}

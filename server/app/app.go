@@ -13,7 +13,7 @@ func Run() {
 
 	r := gin.Default()
 	routes.CorsConfig(r)
-	routes.LoginRoutes(r)
+	routes.LoginRoutes(r, database.InitDb())
 
 	r.Run(":8080")
 }

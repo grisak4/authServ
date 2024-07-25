@@ -40,7 +40,7 @@ func ReadConfigDatabase() DBConnection {
 	return dbCon
 }
 
-func ReadConfigJWT() jwtToken {
+func ReadConfigJWT() string {
 	var jwtTok jwtToken
 
 	viper.SetConfigName("config")
@@ -52,7 +52,7 @@ func ReadConfigJWT() jwtToken {
 		log.Fatalf("Error reading config file, %s", err)
 	}
 
-	jwtTok.jwtSecret = viper.GetString("jwt.secret_key")
+	jwtTok.jwtSecret = viper.GetString("jwt.secret")
 
-	return jwtTok
+	return jwtTok.jwtSecret
 }
