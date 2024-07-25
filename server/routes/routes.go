@@ -1,21 +1,20 @@
 package routes
 
 import (
-	db "auth-test/database"
 	"auth-test/middleware"
 	"auth-test/services/auth"
 	"auth-test/services/welcome"
+	"database/sql"
 	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-func LoginRoutes(router *gin.Engine) {
-	db := db.InitDb()
-	auth.Initialize(db)
-
-	router.POST("/login", auth.PostLogin)
+func LoginRoutes(router *gin.Engine, db *sql.DB) {
+	router.POST("/login", func(c *gin.Context) {
+		auth.PostLogin(c, db)
+	})
 	router.GET("/welcome", middleware.AuthMiddleware(), welcome.GetWelcome)
 }
 

@@ -6,4 +6,4 @@ database:
   dbname: "testauth"
 
 jwt:
-  secret_key: "my_secret_key"
+  secret: "my_secret_key"

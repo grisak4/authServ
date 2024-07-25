@@ -20,7 +20,7 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		claims := &models.Claims{}
 		token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-			return config.ReadConfigJWT(), nil
+			return []byte(config.ReadConfigJWT()), nil
 		})
 
 		if err != nil || !token.Valid {
