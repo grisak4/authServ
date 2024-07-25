@@ -34,25 +34,25 @@ body {
     transition: opacity 0.5s ease, transform 0.5s ease; 
     opacity: 0; 
     pointer-events: none; 
-    transform: translateY(20px); /* Начальное смещение вниз */
+    transform: translateY(20px); 
 }
 
 .window_login.active, .window_signup.active {
     opacity: 1; 
     pointer-events: auto; 
-    transform: translateY(0); /* Сбрасываем смещение */
+    transform: translateY(0); 
 }
 
 .window_login:not(.active) {
     opacity: 0; 
     pointer-events: none; 
-    transform: translateY(-20px); /* Поднимаем окно вверх при скрытии */
+    transform: translateY(-20px); 
 }
 
 .window_signup:not(.active) {
     opacity: 0; 
     pointer-events: none; 
-    transform: translateY(20px); /* Опускаем окно вниз при скрытии */
+    transform: translateY(20px); 
 }
 
 .window_login_headr, .window_signup_headr {
