@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+const AuthForm = () => {
+    const [isLogin, setIsLogin] = useState(true);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    const toggleForm = () => {
+        setIsLogin(prevState => !prevState);
+    };
 
-export default App
+    const handleLoginSubmit = (e) => {
+        e.preventDefault();
+    };
+
+    const handleSignupSubmit = (e) => {
+        e.preventDefault();
+    };
+
+    return (
+        <div className="window">
+            {isLogin ? (
+                <div className="window_login active">
+                    <div className="window_login_headr">
+                        <h1>Login Form</h1>
+                        <button onClick={toggleForm}>Sign up</button>
+                    </div>
+                    <div className="window_login_form">
+                        <form id="submitLogin" onSubmit={handleLoginSubmit}>
+                            <input type="text" className="input" name="username" placeholder="Name" required />
+                            <input type="password" className="input" name="password" placeholder="Password" required />
+                            <button type="submit" className="input_button">Login</button>
+                        </form>
+                        <a href="#" className="input_a">Forgot password?</a>
+                    </div>
+                </div>
+            ) : (
+                <div className="window_signup">
+                    <div className="window_signup_headr">
+                        <h1>Sign up</h1>
+                        <button onClick={toggleForm}>Login</button>
+                    </div>
+                    <div className="window_signup_form">
+                        <form id="submitSignup" onSubmit={handleSignupSubmit}>
+                            <input type="text" className="input" name="name" placeholder="Name" required />
+                            <input type="email" className="input" name="email" placeholder="Email Address" required />
+                            <input type="password" className="input" name="password" placeholder="Password" required />
+                            <button type="submit" className="input_button">Sign up</button>
+                        </form>
+                        <a href="#" className="input_a">Forgot password?</a>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default AuthForm;
