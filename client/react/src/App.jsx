@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './index.css';
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -21,7 +22,6 @@ const AuthForm = () => {
                 <div className="window_login active">
                     <div className="window_login_headr">
                         <h1>Login Form</h1>
-                        <button onClick={toggleForm}>Sign up</button>
                     </div>
                     <div className="window_login_form">
                         <form id="submitLogin" onSubmit={handleLoginSubmit}>
@@ -30,13 +30,13 @@ const AuthForm = () => {
                             <button type="submit" className="input_button">Login</button>
                         </form>
                         <a href="#" className="input_a">Forgot password?</a>
+                        <button onClick={toggleForm}>Sign up</button>
                     </div>
                 </div>
             ) : (
                 <div className="window_signup">
                     <div className="window_signup_headr">
                         <h1>Sign up</h1>
-                        <button onClick={toggleForm}>Login</button>
                     </div>
                     <div className="window_signup_form">
                         <form id="submitSignup" onSubmit={handleSignupSubmit}>
@@ -46,6 +46,7 @@ const AuthForm = () => {
                             <button type="submit" className="input_button">Sign up</button>
                         </form>
                         <a href="#" className="input_a">Forgot password?</a>
+                        <button onClick={toggleForm}>Sign up</button>
                     </div>
                 </div>
             )}
