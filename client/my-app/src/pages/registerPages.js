@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const RegisterPages = () => {
     return(
         <div>
@@ -13,7 +15,7 @@ const RegisterPages = () => {
                         <button type="submit" className="input_button">Sign up</button>
                     </form>
                     <a href="#" className="input_a">Forgot password?</a>
-                    <button to = "/login">Login</button>
+                    <Link to="/login"><button>Login</button></Link>
                 </div>
             </div>
         </div>
